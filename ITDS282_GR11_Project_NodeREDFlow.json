@@ -1,0 +1,152 @@
+[
+    {
+        "id": "8aee7dd8cd533d18",
+        "type": "tab",
+        "label": "Flow 3",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "5b2fdfac69426b60",
+        "type": "mqtt in",
+        "z": "8aee7dd8cd533d18",
+        "name": "From ESP32: PIR",
+        "topic": "esp32/motion",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "mqtt1",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 150,
+        "y": 240,
+        "wires": [
+            [
+                "2e94f117d59b98cf",
+                "e32c36f86956ec02"
+            ]
+        ]
+    },
+    {
+        "id": "2e94f117d59b98cf",
+        "type": "function",
+        "z": "8aee7dd8cd533d18",
+        "name": "Control LED & Servo",
+        "func": "let pir = parseInt(msg.payload);\n\n// สำหรับ Widget ที่รับค่าตัวเลข เช่น LED หรือ Servo\nlet led = { payload: pir, pin: 1 };              // V1\nlet servo = { payload: pir === 1 ? 90 : 0, pin: 2 };  // V2\n\nreturn [led, servo];\n",
+        "outputs": 2,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 240,
+        "wires": [
+            [
+                "63db134f8a262116"
+            ],
+            [
+                "1d64b95eb29cf14d"
+            ]
+        ]
+    },
+    {
+        "id": "63db134f8a262116",
+        "type": "blynk-iot-out-write",
+        "z": "8aee7dd8cd533d18",
+        "name": "LED",
+        "pin": "1",
+        "pinmode": 0,
+        "client": "d3e8d91f4d85366f",
+        "x": 610,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "1d64b95eb29cf14d",
+        "type": "blynk-iot-out-write",
+        "z": "8aee7dd8cd533d18",
+        "name": "Servo",
+        "pin": "2",
+        "pinmode": 0,
+        "client": "d3e8d91f4d85366f",
+        "x": 610,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "8865b048869e4aa5",
+        "type": "blynk-iot-out-write",
+        "z": "8aee7dd8cd533d18",
+        "name": "Status",
+        "pin": "3",
+        "pinmode": 0,
+        "client": "d3e8d91f4d85366f",
+        "x": 610,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "e32c36f86956ec02",
+        "type": "function",
+        "z": "8aee7dd8cd533d18",
+        "name": "แปลงเป็น ON/OFF",
+        "func": "let pir = msg.payload.toString().trim();\nlet label = pir === \"1\" ? \"ON\" : \"OFF\";\n\nreturn {\n    payload: label,\n    pin: 3\n};",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 340,
+        "wires": [
+            [
+                "8865b048869e4aa5"
+            ]
+        ]
+    },
+    {
+        "id": "mqtt1",
+        "type": "mqtt-broker",
+        "name": "Local MQTT",
+        "broker": "192.168.26.8",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 15,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "d3e8d91f4d85366f",
+        "type": "blynk-iot-client",
+        "name": "Blynk",
+        "path": "blynk.cloud",
+        "key": "VV303OaYc_uRpymyfk80VzorRu9xjDrJ",
+        "tmpl": "TMPL6XuaZNcHm",
+        "dbg_all": false,
+        "dbg_log": false,
+        "dbg_prop": false,
+        "dbg_sync": false,
+        "dbg_low": false,
+        "dbg_pins": "",
+        "multi_cmd": false,
+        "enabled": false
+    }
+]
