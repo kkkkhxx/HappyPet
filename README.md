@@ -68,4 +68,4 @@ HappyPet
 ## 📬 ติดต่อ
 
 ติดต่อผ่าน GitHub: [https://github.com/kkkkhxx/HappyPet](https://github.com/kkkkhxx/HappyPet)  
-หรืออีเมล: [กรุณาใส่อีเมลของคุณ]
+หรืออีเมล: tanyaratclub@gmail.com
